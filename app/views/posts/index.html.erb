@@ -9,13 +9,23 @@
     <div class="card-body">
       <h5 class="card-title"><%= link_to post.text, post_path(post) %></h5> 
       <p class="card-text"></p>
-      <%= link_to 'See Comments', post_path(post), class: 'btn btn-primary mr-3' %>
       <% if post.user_id.to_i == current_user.id %>
         <% unless post.status == 'published' %>
-          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-primary mr-3' %>
           <%= link_to 'Publish', publish_post_path(post), class: 'btn btn-primary mr-3', method: :post %>
+          <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-primary mr-3' %>
         <% end %>
         <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mr-2' %> 
+      <% end %>
+      <% if post.status == 'published' %>
+        <%= link_to 'See Comments', post_path(post), class: 'btn btn-primary mr-3' %>
+        <% if post.is_liked?(current_user.id) %>
+          <%= link_to "Unlike (#{post.likes.count})", "likes/#{post.liked_id(current_user.id)}", method: :delete, class: 'btn btn-danger mr-2' %>
+        <% else %>
+          <%= form_for(:request, :url => 'likes') do |f| %>
+            <%= hidden_field_tag 'post_id', post.id  %>
+            <%= f.submit "Like (#{post.likes.count})", class: 'btn btn-primary' %>
+          <% end %>
+        <% end %>
       <% end %>
     </div>
   </div>

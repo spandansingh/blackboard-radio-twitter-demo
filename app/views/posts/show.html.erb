@@ -4,15 +4,16 @@
 
     <h1 class="text-center"><%= @post.text %></h1>
     <hr >
-    
-    <h5 class="card-title"><%= @post.comments.any? ? '': 'No ' %>Comments</h5> 
-    <% if @post.comments.any? %>
-	    <% @post.comments.each do |comment| %> 
-	      <%= render partial: 'posts/comment', locals: { comment: comment } %>
-	    <% end %>
+    <% if @post.status == "published" %>
+	    <h5 class="card-title"><%= @post.comments.any? ? '': 'No ' %>Comments</h5> 
+	    <% if @post.comments.any? %>
+		    <% @post.comments.each do |comment| %> 
+		      <%= render partial: 'posts/comment', locals: { comment: comment } %>
+		    <% end %>
+		<% end %>
+		<div id="comment-form-<%= @post.id %>"></div>
+		<%= link_to 'Add Comment', new_post_path(parent_post_id: @post.id), remote: true, class: 'btn btn-primary' %>
 	<% end %>
-	<div id="comment-form-<%= @post.id %>"></div>
-	<%= link_to 'Add Comment', new_post_path(parent_post_id: @post.id), remote: true, class: 'btn btn-primary' %>
     <%= link_to 'Back', posts_path, class: 'btn btn-light' %>
   </div>
 </div>

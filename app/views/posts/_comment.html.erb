@@ -3,7 +3,17 @@
   	<p><%= comment.user.username %></p>
     <%= comment.text %>
     <div>
-    
+    <% if comment.status == 'draft' %>
+        <% if comment.is_liked?(current_user.id) %>
+          <%= link_to 'Unlike', "/likes/#{comment.liked_id(current_user.id)}?parent_post_id=#{comment.parent_post_id}", method: :delete, class: 'btn btn-danger mr-2' %> 
+        <% else %>
+          <%= form_for(:request, :url => '/likes') do |f| %>
+            <%= hidden_field_tag 'parent_post_id', comment.parent_post_id  %>
+            <%= hidden_field_tag 'post_id', comment.id  %>
+            <%= f.submit 'Like', class: 'btn btn-primary' %>
+          <% end %>
+        <% end %>
+      <% end %>
 	</div>
   </div>
 </div>

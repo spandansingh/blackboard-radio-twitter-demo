@@ -18,7 +18,7 @@
       <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item float-left">
-            <%= link_to 'New Tweet', 'posts/new', class: "button is-info is-inverted" %>
+            <%= link_to 'New Tweet', '/posts/new', class: "button is-info is-inverted" %>
           </li>
         </ul>
         <% if logged_in? %>
@@ -27,11 +27,11 @@
               <%= current_user.username %>
             </li>
             <li class="nav-item">
-              <%= link_to "Logout", 'logout', class:"btn btn-outline-success my-2 my-sm-0" %>
+              <%= link_to "Logout", '/logout', class:"btn btn-outline-success my-2 my-sm-0" %>
             </li>
         <% else %>
         <p class="control">
-          <%= link_to 'Login', 'login', class: "btn is-info" %>
+          <%= link_to 'Login', '/login', class: "btn is-info" %>
         </p>
         <p class="control">
           <%= link_to 'Sign Up', '/users/new', class: "btn is-info" %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+   resources :likes
    root to: 'posts#index'
    resources :posts do 
    	post :publish, on: :member
