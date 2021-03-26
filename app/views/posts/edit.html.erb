@@ -1,0 +1,13 @@
+<div class="card my-5">
+  <div class="card-body">
+    <h1>Edit Post</h1>
+
+    <%= render 'form', post: @post %>
+
+    <div class="mt-2">
+      <%= link_to 'Show', @post, class: 'btn btn-info mr-2' %>
+      <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mr-2' %> 
+      <%= link_to 'Back', posts_path, class: 'btn btn-light' %>
+    </div>
+  </div>
+</div>
