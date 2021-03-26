@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.where(parent_post_id: nil)
+    @posts = Post.where(parent_post_id: nil, status:'published').or(Post.where(parent_post_id:nil, user_id: current_user.id, status: 'draft'))
   end
 
   # GET /posts/1 or /posts/1.json
@@ -13,7 +13,11 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new(parent_post_id: params[:parent_post_id])
+    if params[:parent_post_id].present? 
+      @post = Post.new(parent_post_id: params[:parent_post_id], status: 'published')
+    else
+      @post = Post.new
+    end
   end
 
   # GET /posts/1/edit
@@ -39,10 +43,15 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = session[:user_id]
+    entity = "Post"
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
+        unless @post.parent_post_id == nil
+          @post = Post.find(@post.parent_post_id)
+          entity = "Comment"
+        end
+        format.html { redirect_to @post, notice: "#{entity} was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -66,9 +75,10 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
-    @post.destroy
+    @post.status = 'deleted'
+    @post.save
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: "Post was successfully deleted." }
       format.json { head :no_content }
     end
   end
