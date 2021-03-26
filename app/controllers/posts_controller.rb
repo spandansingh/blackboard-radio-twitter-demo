@@ -76,10 +76,11 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.status = 'deleted'
-    @post.save
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully deleted." }
-      format.json { head :no_content }
+      if @post.save
+        format.html { redirect_to posts_url, notice: "Post was successfully deleted." }
+        format.json { head :no_content }
+      end
     end
   end
 
