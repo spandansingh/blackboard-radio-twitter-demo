@@ -1,0 +1,12 @@
+<div class="card ml-5">
+  <div class="card-body">
+    <%= form_with(model: [@post]) do |f| %>
+      <%= f.hidden_field :parent_post_id %>
+      <div class="form-group">
+        <%= f.label 'Comment' %>
+        <%= f.text_area :text, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>

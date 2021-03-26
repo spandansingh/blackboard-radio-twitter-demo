@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.where(parent_post_id: nil)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @post = Post.new(parent_post_id: params[:parent_post_id])
   end
 
   # GET /posts/1/edit
@@ -38,6 +38,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user_id = session[:user_id]
 
     respond_to do |format|
       if @post.save

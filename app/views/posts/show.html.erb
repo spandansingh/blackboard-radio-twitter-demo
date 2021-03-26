@@ -4,8 +4,14 @@
 
     <h1 class="text-center"><%= @post.text %></h1>
     <hr >
-    
-
+    <%= link_to 'comment', new_post_path(parent_post_id: @post.id), remote: true, class: 'btn btn-primary' %>
+      
+    <% if @post.comments.any? %>
+	    <% @post.comments.each do |comment| %> 
+	      <%= render partial: 'posts/comment', locals: { comment: comment } %>
+	    <% end %>
+	<% end %>
+	<div id="comment-form-<%= @post.id %>"></div>
     <%= link_to 'Back', posts_path, class: 'btn btn-light' %>
   </div>
 </div>

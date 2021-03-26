@@ -8,10 +8,12 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title"><%= link_to post.text, post_path(post) %></h5> 
-      <h5 class="card-title"><%= link_to post.status, post_path(post) %></h5> 
       <p class="card-text"></p>
-      <%= link_to 'Edit', edit_post_path(post), class: 'card-link' %>
-      <%= link_to 'Publish', publish_post_path(post), class: 'card-link', method: :post %>
+      <% unless post.status == 'published' %>
+        <%= link_to 'Edit', edit_post_path(post), class: 'btn btn-primary mr-3' %>
+        <%= link_to 'Publish', publish_post_path(post), class: 'btn btn-primary mr-3', method: :post %>
+      <% end %>
+      <%= link_to 'Delete', post, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger mr-2' %> 
     </div>
   </div>
 <% end %>
