@@ -1,8 +1,12 @@
 <div class="card my-5">
   <div class="card-body">
     <p id="notice"><%= notice %></p>
-
-    <h1 class="text-center"><%= @post.text %></h1>
+    <% if @post.text.present? %>
+    	<h1 class="text-center"><%= @post.text %></h1>
+    <% end %>
+  	<% if @post.link_url.to_s.present? %>
+    	<%= video_tag @post.link_url.to_s, :controls =>true, :size => "320x240" %>
+  	<% end %>
     <hr >
     <% if @post.status == "published" %>
 	    <h5 class="card-title"><%= @post.comments.any? ? '': 'No ' %>Comments</h5> 
