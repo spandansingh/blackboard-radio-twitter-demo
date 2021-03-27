@@ -14,28 +14,35 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
        <%= link_to 'Blackboard Radio Twitter Demo', root_path, class: "navbar-brand" %>
-
-      <div class="collapse navbar-collapse float-right" id="navbarSupportedContent">
+       <div class="collapse navbar-collapse order-0" id="navbarSupportedContent"></div>
+       <div class="collapse navbar-collapse order-1" id="navbarSupportedContent"></div>
+       <div class="collapse navbar-collapse order-2" id="navbarSupportedContent"></div>
+       <div class="collapse navbar-collapse order-2" id="navbarSupportedContent"></div>
+       <div class="collapse navbar-collapse order-2" id="navbarSupportedContent"></div>
+       <div class="collapse navbar-collapse order-2" id="navbarSupportedContent"></div>
+      <div class="collapse navbar-collapse order-3" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item float-left">
+          <li class="nav-item">
             <%= link_to 'New Tweet', '/posts/new', class: "button is-info is-inverted" %>
           </li>
         </ul>
         <% if logged_in? %>
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-              <%= current_user.username %>
+            <li class="nav-item mr-4">
+              <div class="is-info is-inverted">Welcome, <%= current_user.username %></div>
             </li>
             <li class="nav-item">
               <%= link_to "Logout", '/logout', class:"btn btn-outline-success my-2 my-sm-0" %>
             </li>
         <% else %>
-        <p class="control">
-          <%= link_to 'Login', '/login', class: "btn is-info" %>
-        </p>
-        <p class="control">
-          <%= link_to 'Sign Up', '/users/new', class: "btn is-info" %>
-        </p>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item mr-4">
+              <%= link_to 'Login', '/login', class: "btn btn-outline-success" %>
+            </li>
+            <li class="nav-item mr-4">
+              <%= link_to 'Sign Up', '/users/new', class: "btn btn-outline-success" %>
+            </li>
+          </ul>
         <% end %>
       </div>
     </nav>
